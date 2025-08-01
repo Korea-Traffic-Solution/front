@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://1c12dea640af.ngrok-free.app/api',
+  baseURL: 'https://ace02d415d9d.ngrok-free.app/api',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -10,9 +10,13 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token'); // 저장된 JWT 가져오기
+  const token = localStorage.getItem('token');
+  console.log("💬 Axios 인터셉터 토큰:", token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    console.log("✅ Authorization 붙음:", config.headers.Authorization);
+  } else {
+    console.warn("❌ 토큰이 없음 - Authorization 헤더 안 붙음");
   }
   return config;
 });
